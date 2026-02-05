@@ -1,10 +1,10 @@
 from flask_restx import Namespace, Resource, fields
 
-api = Namespace("user", description="urser related operations")
+api = Namespace("user", description="user related operations")
 
 user_model = api.model(
     "User",
-    {"id": fields.Integer(), "name": fields.String(), "lastname": fields.String()},
+    {"id": fields.String(), "name": fields.String(), "lastname": fields.String()},
 )
 
 USERS = [

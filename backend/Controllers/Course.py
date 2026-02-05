@@ -5,7 +5,7 @@ api = Namespace("courses", description="course related operations")
 course_model = api.model(
     "Course",
     {
-        "id": fields.Integer(),
+        "id": fields.String(),
         "name": fields.String(),
         "description": fields.String(),
         "price": fields.Float(),
