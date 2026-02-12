@@ -2,7 +2,11 @@ import { Sunny } from '@mui/icons-material';
 import { usePlatform } from '@providers/PlatformProvider';
 import { memo } from 'react';
 
-const PersonalCorner = () => {
+interface PersonalCornerProps {
+  user?: unknown;
+}
+
+const PersonalCorner = ({ user }: PersonalCornerProps) => {
   const { isMobile } = usePlatform();
 
   return (

@@ -29,6 +29,14 @@ interface SearchBarProps {
   value?: string;
 }
 
+const Adornment = () => {
+  return (
+    <InputAdornment position="end" className="cursor-pointer">
+      <Search className="mr-2 text-white" />
+    </InputAdornment>
+  );
+};
+
 const SearchBar = ({ onInputChange, placeholder, value }: SearchBarProps) => {
   const handleInputChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
@@ -43,14 +51,10 @@ const SearchBar = ({ onInputChange, placeholder, value }: SearchBarProps) => {
         <SearchStyles
           id="course-search"
           className={searchBarStyles.root}
-          placeholder={placeholder || 'How to avoid getting mauled by bears...'}
+          placeholder={placeholder || 'Search...'}
           value={value}
           onChange={handleInputChange}
-          endAdornment={
-            <InputAdornment position="end" className="pointer-events-none">
-              <Search className="mr-2 text-white" />
-            </InputAdornment>
-          }
+          endAdornment={<Adornment />}
         />
       </FormControl>
     </div>

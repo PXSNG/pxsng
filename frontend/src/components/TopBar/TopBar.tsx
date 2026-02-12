@@ -7,7 +7,7 @@ const TopBar = () => {
   return (
     <div className="w-full h-16 flex items-center px-4 shadow-md fixed top-0 bg-topbar z-10">
       <div className="flex items-center w-full">
-        <div className="mr-8 flex items-center">
+        <div className="mr-8 flex items-center justify-center select-none cursor-pointer">
           <Logo width={48} height={48} />
         </div>
         <div className="flex-1 grow">

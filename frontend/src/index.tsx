@@ -4,12 +4,18 @@ import App from './app/App';
 import Compose from './app/Compose';
 
 import { PlatformProvider } from '@providers/PlatformProvider';
+import { GestureProvider } from '@providers/GestureProvider';
+import { SearchProvider } from '@providers/SearchProvider';
 
 import './index.css';
 
 const root = document.getElementById('root') as HTMLElement;
 
-const providers: ComponentType<{ children: ReactNode }>[] = [PlatformProvider];
+const providers: ComponentType<{ children: ReactNode }>[] = [
+  GestureProvider,
+  PlatformProvider,
+  SearchProvider,
+];
 
 createRoot(root).render(
   <StrictMode>

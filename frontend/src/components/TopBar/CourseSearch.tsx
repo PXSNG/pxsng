@@ -2,9 +2,11 @@ import { memo } from 'react';
 import SearchBar from '@components/SearchBar/SearchBar';
 import { Add } from '@mui/icons-material';
 import { usePlatform } from '@providers/PlatformProvider';
+//import { useSearch } from '@providers/SearchProvider';
 
 const CourseSearch = () => {
   const { isMobile } = usePlatform();
+  //const { query, setQuery } = useSearch();
 
   return (
     <div className="w-full flex flex-row items-center">
