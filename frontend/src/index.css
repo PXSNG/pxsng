@@ -1,3 +1,10 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-topbar: #211f26;
+  --color-secondary-topbar: #282930;
+}
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
