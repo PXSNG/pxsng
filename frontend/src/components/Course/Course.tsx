@@ -1,11 +1,11 @@
 import { memo, useCallback } from 'react';
 
-export type CourseType = {
+export interface CourseType {
   name: string;
   description: string;
   image?: string;
   price: number;
-};
+}
 
 interface CourseProps {
   course: CourseType;

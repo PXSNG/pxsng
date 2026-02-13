@@ -33,13 +33,27 @@ export const GestureProvider = ({ children }: GestureProviderProps) => {
     const element = ref?.current;
     if (!element) {
       return {
-        onSwipeLeft: () => () => {},
-        onSwipeRight: () => () => {},
-        onSwipeUp: () => () => {},
-        onSwipeDown: () => () => {},
-        onTap: () => () => {},
-        onLongPress: () => () => {},
-        cleanup: () => {},
+        onSwipeLeft: () => () => {
+          /* empty */
+        },
+        onSwipeRight: () => () => {
+          /* empty */
+        },
+        onSwipeUp: () => () => {
+          /* empty */
+        },
+        onSwipeDown: () => () => {
+          /* empty */
+        },
+        onTap: () => () => {
+          /* empty */
+        },
+        onLongPress: () => () => {
+          /* empty */
+        },
+        cleanup: () => {
+          /* empty */
+        },
       };
     }
 
@@ -146,13 +160,27 @@ export const useGestures = (ref: React.RefObject<HTMLElement | null>) => {
 
   const defaultHandlers = useMemo(
     () => ({
-      onSwipeLeft: () => () => {},
-      onSwipeRight: () => () => {},
-      onSwipeUp: () => () => {},
-      onSwipeDown: () => () => {},
-      onTap: () => () => {},
-      onLongPress: () => () => {},
-      cleanup: () => {},
+      onSwipeLeft: () => () => {
+        /* empty */
+      },
+      onSwipeRight: () => () => {
+        /* empty */
+      },
+      onSwipeUp: () => () => {
+        /* empty */
+      },
+      onSwipeDown: () => () => {
+        /* empty */
+      },
+      onTap: () => () => {
+        /* empty */
+      },
+      onLongPress: () => () => {
+        /* empty */
+      },
+      cleanup: () => {
+        /* empty */
+      },
     }),
     [],
   );
@@ -164,11 +192,13 @@ export const useGestures = (ref: React.RefObject<HTMLElement | null>) => {
 
   useLayoutEffect(() => {
     if (!target) {
+      // eslint-disable-next-line @eslint-react/hooks-extra/no-direct-set-state-in-use-effect
       setHandlers(defaultHandlers);
       return undefined;
     }
 
     const nextHandlers = context.setupGestureDetection(ref as React.RefObject<HTMLElement>);
+    // eslint-disable-next-line @eslint-react/hooks-extra/no-direct-set-state-in-use-effect
     setHandlers(nextHandlers);
 
     return () => {
