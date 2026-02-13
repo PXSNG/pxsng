@@ -18,17 +18,44 @@ services:
     command: sh -c "flutter pub get && flutter test"
 
   oracle-db:
-    image: container-registry.oracle.com/database/express:21.3.0-xe
+    image: container-registry.oracle.com/database/free:latest
+    container_name: oracle-23ai-free
+    hostname: database
+    env_file:
+      - .env
     environment:
-      - ORACLE_PASSWORD=Oracle123
+      ORACLE_PWD: ${ORACLE_PWD}
+      APP_USER: ${APP_USER}
+      APP_USER_PASSWORD: ${APP_USER_PASSWORD}
     ports:
       - "1521:1521"
+      - "5500:5500"
+    volumes:
+      - ../model/oracle-data/data/:/opt/oracle/oradata
+      - ../model/oracle-data/startup/:/opt/oracle/scripts/startup
+      - ../model/oracle-data/setup/:/opt/oracle/scripts/setup
     healthcheck:
-      test: ["CMD", "exit", "0"]
+      test: ["CMD-SHELL", "lsnrctl status | grep 'READY'"]
+      interval: 10s
+      retries: 10
 
-  ords:
-    image: container-registry.oracle.com/database/ords:latest
-    ports:
-      - "8888:8888"
-    depends_on:
-      - oracle-db
+#   ords:
+#     image: container-registry.oracle.com/database/ords:latest
+#     container_name: oracle-ords
+#     restart: unless-stopped
+#     environment:
+#       DBHOST: database
+#       DBPORT: 1521
+#       DBSERVICENAME: FREEPDB1
+#       ORACLE_PWD: ${ORACLE_PWD}
+#       ORDS_CONFIG_DIR: /etc/ords/config
+#     depends_on:
+#       oracle-db:
+#         condition: service_healthy
+#     ports:
+#       - "8888:8080"
+#     volumes:
+#       - ords-config:/etc/ords/config/
+
+# volumes:
+#   ords-config:
