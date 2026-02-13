@@ -1,4 +1,4 @@
-import { use, useLayoutEffect, useMemo, useState } from 'react';
+import { use, useLayoutEffect, useMemo, useRef } from 'react';
 import { createContext, ReactNode } from 'react';
 
 interface GestureContextType {
@@ -185,27 +185,35 @@ export const useGestures = (ref: React.RefObject<HTMLElement | null>) => {
     [],
   );
 
-  const [handlers, setHandlers] =
-    useState<ReturnType<typeof context.setupGestureDetection>>(defaultHandlers);
+  const handlersRef = useRef<ReturnType<typeof context.setupGestureDetection>>(defaultHandlers);
 
-  const target = ref?.current;
+  // Stable API surface; implementation delegates to latest handlersRef value.
+  const handlerApi = useMemo(
+    () => ({
+      onSwipeLeft: (cb: () => void) => handlersRef.current.onSwipeLeft(cb),
+      onSwipeRight: (cb: () => void) => handlersRef.current.onSwipeRight(cb),
+      onSwipeUp: (cb: () => void) => handlersRef.current.onSwipeUp(cb),
+      onSwipeDown: (cb: () => void) => handlersRef.current.onSwipeDown(cb),
+      onTap: (cb: () => void) => handlersRef.current.onTap(cb),
+      onLongPress: (cb: () => void) => handlersRef.current.onLongPress(cb),
+      cleanup: () => handlersRef.current.cleanup(),
+    }),
+    [],
+  );
 
   useLayoutEffect(() => {
-    if (!target) {
-      // eslint-disable-next-line @eslint-react/hooks-extra/no-direct-set-state-in-use-effect
-      setHandlers(defaultHandlers);
+    if (!ref?.current) {
       return undefined;
     }
 
     const nextHandlers = context.setupGestureDetection(ref as React.RefObject<HTMLElement>);
-    // eslint-disable-next-line @eslint-react/hooks-extra/no-direct-set-state-in-use-effect
-    setHandlers(nextHandlers);
+    handlersRef.current = nextHandlers;
 
     return () => {
       nextHandlers.cleanup();
-      setHandlers(defaultHandlers);
+      handlersRef.current = defaultHandlers;
     };
-  }, [context, defaultHandlers, ref, target]);
+  }, [context, defaultHandlers, ref]);
 
-  return handlers;
+  return handlerApi;
 };

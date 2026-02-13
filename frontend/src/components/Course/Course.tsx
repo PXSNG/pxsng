@@ -37,7 +37,7 @@ const Course = ({ course, width, height, onClick }: CourseProps) => {
             height={height || 200}
           />
         </div>
-        <div className="bottom-0 h-1/2 group-hover:bg-secondary-topbar group-hover:mask-t-from-0% group-hover:mask-t-to-100% rounded-md absolute p-3 w-full flex flex-col justify-end">
+        <div className="bottom-0 h-1/2 rounded-md absolute p-3 w-full flex flex-col justify-end group-hover:bg-linear-to-t group-hover:from-secondary-topbar/90 group-hover:to-secondary-topbar/0">
           <div className="text-xl font-bold text-gray-900  group-hover:text-gray-100 truncate">
             {course.name}
           </div>

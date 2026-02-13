@@ -28,7 +28,7 @@ const Carousel = ({ children }: CarouselProps) => {
       unsubscribeLeft();
       unsubscribeRight();
     };
-  }, [onSwipeLeft, onSwipeRight, next, prev]);
+  }, [handleNext, handlePrev, onSwipeLeft, onSwipeRight]);
 
   return (
     <div ref={ref} className="overflow-hidden space-x-4 w-full py-4 relative ">

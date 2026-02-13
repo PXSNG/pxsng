@@ -18,7 +18,9 @@ const useWindowSize = () => {
     const debouncedHandleResize = debounce(handleResize, 200);
 
     window.addEventListener('resize', debouncedHandleResize);
-    return () => window.removeEventListener('resize', debouncedHandleResize);
+    return () => {
+      window.removeEventListener('resize', debouncedHandleResize);
+    };
   }, []);
 
   return size;
