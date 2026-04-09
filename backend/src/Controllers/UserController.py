@@ -9,8 +9,8 @@ api = Namespace("user", description="user related operations")
 user_model = api.model(
     "User",
     {
-        "id": fields.String(), 
-        "firstname": fields.String(), 
+        "id": fields.String(),
+        "firstname": fields.String(),
         "lastname": fields.String(),
         "email": fields.String(),
         "telephone": fields.String(),
@@ -22,6 +22,7 @@ user_model = api.model(
 database_accessor = UsersCalls()
 USERS: list[User] = database_accessor.GetAllUsers()
 
+
 @api.route("/")
 class UsersController(Resource):
     @api.marshal_list_with(user_model)
@@ -30,6 +31,7 @@ class UsersController(Resource):
 
     def put(self):
         USERS.append({"id": 3, "name": "Bob", "lastname": "Shakespeare"})
+
 
 @api.route("/<string:id>")
 class UserController(Resource):
