@@ -1,6 +1,7 @@
-import { memo } from 'react';
-import CourseCategory from './CourseCategory';
+import { lazy, memo } from 'react';
 import { Person, Star, TrendingUp } from '@mui/icons-material';
+
+const CourseCategory = lazy(() => import('./CourseCategory'));
 
 const courses = [
   {
@@ -25,7 +26,7 @@ const courses = [
 
 const LandingPage = () => {
   return (
-    <div>
+    <div className="p-6 space-y-8 overflow-y-auto justify-center  flex flex-col ">
       <CourseCategory title="Featured" courses={courses} icon={<Star />} />
       <CourseCategory title="For you" courses={courses} icon={<Person />} />
       <CourseCategory title="Trending" courses={courses} icon={<TrendingUp />} />

@@ -28,7 +28,11 @@ export const PlatformProvider = ({ children }: PlatformProviderProps) => {
     return size.width > 1024;
   }, [size]);
 
-  return <PlatformContext value={{ isMobile, isTablet, isDesktop }}>{children}</PlatformContext>;
+  const contextValue = useMemo(() => {
+    return { isMobile, isTablet, isDesktop };
+  }, [isMobile, isTablet, isDesktop]);
+
+  return <PlatformContext value={contextValue}>{children}</PlatformContext>;
 };
 
 export const usePlatform = () => {

@@ -12,9 +12,11 @@ const Logo = ({ width, height }: LogoProps) => {
   if (isMobile) {
     return (
       <img
-        className="select-none"
+        draggable={false}
+        className="select-none w-12 h-12 rounded-full"
         src="/pxsng.svg"
         alt="PXSNG Logo"
+        title="PXSNG"
         width={width}
         height={height}
       />
@@ -24,11 +26,13 @@ const Logo = ({ width, height }: LogoProps) => {
   return (
     <div className="flex flex-row items-center">
       <img
+        draggable={false}
         className="select-none"
         src="/pxsng.svg"
         alt="PXSNG Logo"
         width={width}
         height={height}
+        title="PXSNG"
       />
       <p className="text-2xl font-bold ml-2">PXSNG</p>
     </div>

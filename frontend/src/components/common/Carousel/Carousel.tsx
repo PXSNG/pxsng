@@ -37,13 +37,16 @@ const Carousel = ({ children }: CarouselProps) => {
           className="w-10 h-24 bg-gray-300 rounded-md flex items-center justify-center opacity-50 hover:opacity-75 transition-opacity cursor-pointer"
           onClick={handlePrev}
         >
-          <ChevronLeft className="text-black" height={48} />
+          <ChevronLeft className="text-black w-12" height={48} />
         </div>
       </div>
       <div className="flex items-center space-x-4 justify-center w-full">
         <div className="flex space-x-4">
           {orderedList.map((child, index) => (
-            <div key={index} className="opacity-50 hover:opacity-75 transition-opacity">
+            <div
+              key={index}
+              className="opacity-50 hover:opacity-75 transition-opacity cursor-pointer"
+            >
               {child}
             </div>
           ))}

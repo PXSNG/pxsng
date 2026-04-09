@@ -4,9 +4,10 @@ import InputBase from '@mui/material/InputBase';
 
 import Search from '@mui/icons-material/Search';
 import { InputAdornment, styled } from '@mui/material';
+import { useSettings } from '@providers/SettingsProvider';
 
 const searchBarStyles = {
-  root: 'rounded-xl bg-secondary-topbar dark:bg-secondary-topbar text-white px-4 py-2 border-none',
+  root: 'rounded-xl bg-secondary-topbar-light dark:bg-secondary-topbar-dark text-font-light dark:text-font-dark px-4 py-2 border-none',
 };
 
 const SearchStyles = styled(InputBase)({
@@ -15,40 +16,46 @@ const SearchStyles = styled(InputBase)({
     padding: '5px 12px',
     width: '100%',
     borderRadius: '9999px',
-    backgroundColor: 'var(--color-secondary-topbar)',
-    color: 'white',
+    backgroundColor: 'transparent',
+    color: 'inherit',
     '&::placeholder': {
-      color: 'rgba(255, 255, 255, 0.7)',
+      color: 'calc(rgba(33, 53, 71, 0.6), inherit)',
+    },
+    '&::placeholder[data-theme="dark"]': {
+      color: 'calc(rgba(255, 255, 255, 0.6), inherit)',
     },
   },
 });
 
 interface SearchBarProps {
-  onInputChange?: (value: string) => void;
+  onChange?: (value: string) => void;
   placeholder?: string;
   value?: string;
 }
 
 const Adornment = () => {
+  const { theme } = useSettings();
   return (
     <InputAdornment position="end" className="cursor-pointer">
-      <Search className="mr-2 text-white" />
+      <Search className="mr-2 text-font-light dark:text-font-dark" data-theme={theme} />
     </InputAdornment>
   );
 };
 
-const SearchBar = ({ onInputChange, placeholder, value }: SearchBarProps) => {
+const SearchBar = ({ onChange, placeholder, value }: SearchBarProps) => {
+  const { theme } = useSettings();
   const handleInputChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
-      onInputChange?.(event.target?.value);
+      onChange?.(event.target?.value);
     },
-    [onInputChange],
+    [onChange],
   );
 
   return (
     <div>
       <FormControl fullWidth={true}>
         <SearchStyles
+          data-theme={theme}
           id="course-search"
           className={searchBarStyles.root}
           placeholder={placeholder || 'Search...'}

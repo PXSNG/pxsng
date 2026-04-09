@@ -1,6 +1,6 @@
 import { memo } from 'react';
 
-import Carousel from '@components/Carousel/Carousel';
+import Carousel from '@components/common/Carousel/Carousel';
 import Course, { CourseType } from '@components/Course/Course';
 
 interface CourseCategoryProps {
@@ -11,7 +11,7 @@ interface CourseCategoryProps {
 
 const CourseCategory = ({ title, icon, courses }: CourseCategoryProps) => {
   return (
-    <>
+    <div className="w-full mb-8">
       <div
         style={{ backgroundColor: '#F1ED38', color: '#333' }}
         className="select-none rounded-4xl ml-2 text-2xl font-bold mb-2 outline w-fit px-4 py-2 flex items-center space-x-2"
@@ -25,7 +25,7 @@ const CourseCategory = ({ title, icon, courses }: CourseCategoryProps) => {
           <Course key={course?.name || index} course={course} width={400} height={250} />
         ))}
       </Carousel>
-    </>
+    </div>
   );
 };
 

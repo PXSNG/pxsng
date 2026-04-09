@@ -14,11 +14,11 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": "src",
+    "noUncheckedSideEffectImports": false,
     "paths": {
-      "@*": ["./*"]
+      "@*": ["./src/*"]
     }
   },
   "include": ["src", "vite.config.ts"],
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["node_modules", "dist", "*.config.{ts,js}"]
 }
