@@ -1,25 +1,40 @@
 from Types.Course import Course
+import oracledb
+from Persistence.DatabaseConnection import DatabaseConnection
+
 
 class CoursesCalls:
     def __init__(self):
-        dummy_courses =  [
-            Course(title="OracleDB in Python", 
-                   id=1, 
-                   price=1.99, 
-                   description="Python", 
-                   duration_days=1,
-                   max_participants=2,
-                   category_id=1),
-            Course(title="React in Typescript",
-                   id=2,
-                   price=2.99,
-                   description="React",
-                   duration_days=1,
-                   max_participants=3,
-                   category_id=1)
-        ]
-        self.Courses = dummy_courses     
-        
-    def GetAllCourses(self) -> list[Course]:
-        return self.Courses
+        self.db_manager = DatabaseConnection()
 
+    def GetAllCourses(self) -> list[Course]:
+        conn = self.db_manager.connection
+        try:
+            with conn.cursor() as cursor:
+                p_courses_cursor = cursor.var(oracledb.CURSOR)
+
+                cursor.callproc("course_api_pkg.get_all_courses",
+                                [p_courses_cursor])
+
+                result_cursor = p_courses_cursor.getvalue()
+                result_cursor.rowfactory = Course
+
+                courses = result_cursor.fetchall()
+                result_cursor.close()
+                return courses
+        finally:
+            self.db_manager.release(conn)
+
+    def GetCourseById(self, id: int) -> Course:
+        conn = self.db_manager.connection
+        try:
+            with conn.cursor() as cursor:
+                p_course_cursor = cursor.var(oracledb.CURSOR)
+                p_course_id = cursor.var(int)
+
+                cursor.callproc("course_api_pkg.get_course_by_id", [
+                                p_course_id, p_course_cursor])
+                result_cursor = p_course_cursor.getvalue()
+                return Course
+        finally:
+            self.db_manager.release(conn)
