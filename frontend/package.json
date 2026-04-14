@@ -10,7 +10,8 @@
     "lint": "eslint 'src/**/*.{ts,tsx}'",
     "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix && prettier --write \"src/**/*.{ts,tsx}\"",
     "format": "prettier --write \"src/**/*.{ts,tsx,css,md,json}\"",
-    "prepare": "cd .. && husky frontend/.husky"
+    "prepare": "cd .. && husky frontend/.husky",
+    "serve": "pnpm run build && http-server dist -p 8080 -a 0.0.0.0"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -19,6 +20,7 @@
     "@mui/icons-material": "^7.3.10",
     "@mui/material": "^7.3.10",
     "@tailwindcss/vite": "^4.2.2",
+    "http-server": "^14.1.1",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "react-loading-skeleton": "^3.5.0",

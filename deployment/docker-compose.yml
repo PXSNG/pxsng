@@ -3,23 +3,29 @@ services:
     build:
       context: ../frontend
     ports:
-      - "3000:3000"
+      - '8080:8080'
+    expose:
+      - '8080'
     depends_on:
       - backend
-    command: sh -c "npm install && npm test -- --watchAll=false"
-
+    command: sh -c "npm install && npm run serve"
+    healthcheck:
+      test: ['CMD-SHELL', 'curl -f http://localhost:8080/ || exit 1']
+      interval: 10s
+      retries: 5
   backend:
     build:
       context: ../backend
-    ports:
-      - "8080:8080"
+    expose:
+      - '3000'
     depends_on:
       - oracle-db
     command: sh -c "flutter pub get && flutter test"
 
   oracle-db:
     image: container-registry.oracle.com/database/free:latest
-    container_name: oracle-23ai-free
+    container_name: free-oracle-db
+    restart: unless-stopped
     hostname: database
     env_file:
       - .env
@@ -27,15 +33,15 @@ services:
       ORACLE_PWD: ${ORACLE_PWD}
       APP_USER: ${APP_USER}
       APP_USER_PASSWORD: ${APP_USER_PASSWORD}
-    ports:
-      - "1521:1521"
-      - "5500:5500"
+    expose:
+      - '1521'
+      - '5500'
     volumes:
       - ../model/oracle-data/data/:/opt/oracle/oradata
       - ../model/oracle-data/startup/:/opt/oracle/scripts/startup
       - ../model/oracle-data/setup/:/opt/oracle/scripts/setup
     healthcheck:
-      test: ["CMD-SHELL", "lsnrctl status | grep 'READY'"]
+      test: ['CMD-SHELL', "lsnrctl status | grep 'READY'"]
       interval: 10s
       retries: 10
 
