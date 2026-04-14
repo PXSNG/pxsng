@@ -27,7 +27,7 @@ const ContextMenuList = ({
   );
 
   return (
-    <div role="menu" className="flex flex-col">
+    <div role="menu">
       {groupedItems.map((group, groupIndex) => {
         if (group.length === 0) {
           return null;

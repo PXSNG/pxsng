@@ -22,6 +22,12 @@ const courses = [
     image: '/course3.jpg',
     price: 39.99,
   },
+  {
+    name: 'Managing Jealousy in the Workplace',
+    description: 'Learn how to manage jealousy in professional settings.',
+    image: '/course4.jpg',
+    price: 39.99,
+  },
 ];
 
 const LandingPage = () => {

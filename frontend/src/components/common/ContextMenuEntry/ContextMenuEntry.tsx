@@ -34,7 +34,8 @@ const ContextMenuEntry = ({
 
   const styles = {
     mobile: {
-      entry: 'px-4 py-3 flex items-center space-x-3 select-none transition-colors text-base',
+      entry:
+        'px-4 py-4 bg-secondary-light dark:bg-secondary-dark flex items-center space-x-3 select-none transition-colors text-base',
     },
     desktop: {
       entry:

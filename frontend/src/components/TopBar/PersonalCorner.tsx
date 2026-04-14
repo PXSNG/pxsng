@@ -1,4 +1,5 @@
 import { ModeNight, Sunny } from '@mui/icons-material';
+import { useContextMenu } from '@providers/ContextMenuProvider';
 import { usePlatform } from '@providers/PlatformProvider';
 import { useSettings } from '@providers/SettingsProvider';
 import { useUser } from '@providers/UserProvider';
@@ -8,6 +9,7 @@ const PersonalCorner = () => {
   const { theme, toggleTheme: settingsToggleTheme } = useSettings();
   const { isMobile } = usePlatform();
   const { user } = useUser();
+  const { showContextMenu } = useContextMenu();
 
   const toggleTheme = useCallback(() => {
     settingsToggleTheme();
@@ -15,6 +17,44 @@ const PersonalCorner = () => {
 
   const userInitial = useMemo(() => user?.name?.charAt(0) ?? '?', [user]);
   const userPoints = useMemo(() => user?.points ?? 0, [user]);
+
+  const handleProfileClick = useCallback(
+    (e) => {
+      showContextMenu(e, [
+        {
+          label: 'Profile',
+          onClick: () => {
+            console.log('Go to profile');
+          },
+        },
+        {
+          label: 'Settings',
+          onClick: () => {
+            console.log('Go to settings');
+          },
+        },
+        {
+          label: '---',
+          variant: 'separator',
+        },
+        {
+          label: `My Points: ${userPoints}`,
+        },
+        {
+          label: '---',
+          variant: 'separator',
+        },
+        {
+          label: 'Logout',
+          variant: 'danger',
+          onClick: () => {
+            console.log('Logout');
+          },
+        },
+      ]);
+    },
+    [showContextMenu],
+  );
 
   return (
     <div className="flex items-center">
@@ -44,6 +84,7 @@ const PersonalCorner = () => {
       )}
 
       <div
+        onClick={handleProfileClick}
         className="ml-4 rounded-full bg-secondary-topbar-light dark:bg-secondary-topbar-dark w-12 h-12 flex items-center justify-center cursor-pointer select-none hover:ring-2 hover:ring-yellow-400 transition-all duration-200"
         data-theme={theme}
       >

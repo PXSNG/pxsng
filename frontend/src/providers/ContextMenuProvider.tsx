@@ -15,9 +15,11 @@ import { ContextMenuItem } from '@components/common/ContextMenuEntry/ContextMenu
 import { useBackHandler } from '@hooks/useBackHandler';
 
 import ErrorBoundary from '@components/common/ErrorBoundary/ErrorBoundary';
+import ContextMenuEntryList from '@components/common/ContextMenuEntry/ContextMenuEntryList';
+import { useSettings } from './SettingsProvider';
 
 const ContextMenuContext = createContext<{
-  showContextMenu: (e: MouseEvent, items: ContextMenuItem[]) => void;
+  showContextMenu: (e: MouseEvent | null, items: ContextMenuItem[]) => void;
   closeContextMenu: () => void;
 } | null>(null);
 
@@ -27,6 +29,7 @@ interface ContextMenuProviderProps {
 
 const ContextMenuProvider = ({ children }: ContextMenuProviderProps) => {
   const { isMobile } = usePlatform();
+  const { theme } = useSettings();
   const [isRendered, setIsRendered] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -44,16 +47,18 @@ const ContextMenuProvider = ({ children }: ContextMenuProviderProps) => {
     }, 300);
   }, []);
 
-  const handleContextMenu = useCallback((e: MouseEvent, items: ContextMenuItem[]) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const handleContextMenu = useCallback((e: MouseEvent | null, items: ContextMenuItem[]) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
 
     if (window.getSelection) {
       window.getSelection()?.removeAllRanges();
     }
 
-    const clickX = e.clientX;
-    const clickY = e.clientY;
+    const clickX = e ? e.clientX : 0;
+    const clickY = e ? e.clientY : 0;
 
     setClickPosition({ x: clickX, y: clickY });
     setMenuItems(items);
@@ -123,7 +128,7 @@ const ContextMenuProvider = ({ children }: ContextMenuProviderProps) => {
 
   const styles = {
     mobile: {
-      container: `absolute h-fit z-70 border-t rounded-t-xl shadow-2xl p-4 pb-8
+      container: `absolute h-fit z-70  rounded-t-xl shadow-2xl p-4 pb-8
         transform transition-transform duration-300 ease-in-out
         ${isVisible ? 'translate-y-0' : 'translate-y-full'}`,
     },
@@ -133,13 +138,11 @@ const ContextMenuProvider = ({ children }: ContextMenuProviderProps) => {
     },
   };
 
-  // @ts-expect-error typing is a nightmare on this, trust
   const handleDefaultContextMenu = useCallback((e) => {
     e.preventDefault();
     e.stopPropagation();
   }, []);
 
-  // @ts-expect-error typing is a nightmare on this, trust
   const handleClick = useCallback((e) => {
     e?.stopPropagation();
   }, []);
@@ -166,11 +169,15 @@ const ContextMenuProvider = ({ children }: ContextMenuProviderProps) => {
                         opacity: isVisible ? 1 : 0,
                       }
                 }
-                className={styles[isMobile ? 'mobile' : 'desktop'].container}
+                className={
+                  styles[isMobile ? 'mobile' : 'desktop'].container +
+                  ' bg-secondary-light dark:bg-secondary-dark'
+                }
+                data-theme={theme}
                 onClick={handleClick}
                 onContextMenu={handleDefaultContextMenu}
               >
-                <div />
+                <ContextMenuEntryList items={menuItems || []} isMobile={isMobile} />
               </div>
             </div>,
             document.body,

@@ -10,22 +10,21 @@ interface CourseCategoryProps {
 }
 
 const CourseCategory = ({ title, icon, courses }: CourseCategoryProps) => {
+  if (!courses || courses.length === 0) return null;
+
   return (
-    <div className="w-full mb-8">
-      <div
-        style={{ backgroundColor: '#F1ED38', color: '#333' }}
-        className="select-none rounded-4xl ml-2 text-2xl font-bold mb-2 outline w-fit px-4 py-2 flex items-center space-x-2"
-      >
+    <section className="w-full mb-8" aria-label={title}>
+      <h2 className="bg-[#F1ED38] text-[#333] select-none rounded-4xl ml-2 text-2xl font-bold mb-2 outline w-fit px-4 py-2 flex items-center space-x-2">
         {icon}
         <span>{title}</span>
-      </div>
+      </h2>
 
       <Carousel>
         {courses.map((course, index) => (
           <Course key={course?.name || index} course={course} width={400} height={250} />
         ))}
       </Carousel>
-    </div>
+    </section>
   );
 };
 

@@ -15,6 +15,7 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "noUncheckedSideEffectImports": false,
+    "noImplicitAny": false,
     "paths": {
       "@*": ["./src/*"]
     }
