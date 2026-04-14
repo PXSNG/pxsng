@@ -8,6 +8,6 @@ RUN pip install -r requirements.txt
 
 COPY src /app/src
 
-CMD ["flask", "--app", "src/main.py", "run", "--host", "0.0.0.0", "--port", "8080"]
+CMD ["flask", "--app", "src/main.py", "run", "--host", "0.0.0.0", "--port", ${BACKEND_PORT:-3000}]
 
-EXPOSE 8080
+EXPOSE ${BACKEND_PORT:-3000}

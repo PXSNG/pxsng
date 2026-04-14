@@ -10,8 +10,7 @@
     "lint": "eslint 'src/**/*.{ts,tsx}'",
     "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix && prettier --write \"src/**/*.{ts,tsx}\"",
     "format": "prettier --write \"src/**/*.{ts,tsx,css,md,json}\"",
-    "prepare": "cd .. && husky frontend/.husky",
-    "serve": "pnpm run build && http-server dist -p 8080 -a 0.0.0.0"
+    "prepare": "cd .. && husky frontend/.husky"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -20,7 +19,6 @@
     "@mui/icons-material": "^7.3.10",
     "@mui/material": "^7.3.10",
     "@tailwindcss/vite": "^4.2.2",
-    "http-server": "^14.1.1",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "react-loading-skeleton": "^3.5.0",
@@ -34,16 +32,16 @@
     "@types/node": "25.2.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "@typescript-eslint/eslint-plugin": "^8.58.1",
-    "@typescript-eslint/parser": "^8.58.1",
+    "@typescript-eslint/eslint-plugin": "^8.58.2",
+    "@typescript-eslint/parser": "^8.58.2",
     "@vitejs/plugin-react": "^5.2.0",
     "eslint": "^10.2.0",
     "globals": "17.3.0",
     "husky": "^9.1.7",
-    "prettier": "^3.8.1",
+    "prettier": "^3.8.2",
     "prettier-eslint": "^16.4.2",
     "typescript": "~5.9.3",
-    "typescript-eslint": "^8.58.1",
+    "typescript-eslint": "^8.58.2",
     "vite": "^7.3.2",
     "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^4.1.4"
