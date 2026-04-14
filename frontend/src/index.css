@@ -1,11 +1,27 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@theme {
+  --color-topbar-dark: #211f26;
+  --color-secondary-topbar-dark: #282930;
+  --color-background-dark: #242424;
+  --color-font-dark: rgba(255, 255, 255, 0.87);
+  --color-secondary-dark: rgba(255, 255, 255, 0.6);
+
+  --color-topbar-light: #f9f9f9;
+  --color-secondary-topbar-light: #e0e0e0;
+  --color-background-light: #ffffff;
+  --color-font-light: #213547;
+  --color-secondary-light: rgba(33, 53, 71, 0.6);
+}
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;

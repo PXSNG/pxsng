@@ -1,0 +1,5 @@
+cd frontend
+
+pnpm run lint:fix
+
+git update-index --again
