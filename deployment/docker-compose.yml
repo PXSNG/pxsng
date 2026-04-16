@@ -3,28 +3,26 @@ services:
     build:
       context: ../frontend
     ports:
-      - '8080:8080'
-    expose:
-      - '8080'
+      - 80:80'
     depends_on:
       - backend
     healthcheck:
-      test: ['CMD-SHELL', 'curl -f http://localhost:8080/ || exit 1']
-      interval: 10s
+      test:
+        [
+          'CMD-SHELL',
+          'wget -q -O /dev/null http://localhost:80/index.html || exit 1',
+        ]
+      interval: 20s
       retries: 5
   backend:
     build:
       context: ../backend
     env_file:
       - .env
-    environment:
-      BACKEND_PORT: ${BACKEND_PORT:-3000}
     expose:
-      - '3000'
+      - '8080'
     depends_on:
       - oracle-db
-    command: sh -c "flutter pub get && flutter test"
-
   oracle-db:
     image: container-registry.oracle.com/database/free:latest
     container_name: free-oracle-db
@@ -45,7 +43,7 @@ services:
       - ../model/oracle-data/setup/:/opt/oracle/scripts/setup
     healthcheck:
       test: ['CMD-SHELL', "lsnrctl status | grep 'READY'"]
-      interval: 10s
+      interval: 20s
       retries: 10
 
 #   ords:

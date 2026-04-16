@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "pnpm run lint && vite build",
+    "build:prod": "vite build --mode production",
+    "build": "npm run lint && vite build",
     "preview": "vite preview --port 5000 --host 0.0.0.0",
     "lint": "eslint 'src/**/*.{ts,tsx}'",
     "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix && prettier --write \"src/**/*.{ts,tsx}\"",
@@ -39,7 +40,7 @@
     "globals": "17.3.0",
     "husky": "^9.1.7",
     "prettier": "^3.8.2",
-    "prettier-eslint": "^16.4.2",
+    "prettier-eslint": "^16.3.0",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.58.2",
     "vite": "^7.3.2",
