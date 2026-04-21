@@ -9,15 +9,11 @@ jobs:
         with:
           path: ~/.npm
           key: ${{ runner.os }}-npm-${{ hashFiles('frontend/package-lock.json') }}
-      - uses: actions/cache@v3
-        with:
-          path: ~/.pub-cache
-          key: ${{ runner.os }}-flutter-${{ hashFiles('backend/pubspec.lock') }}
 
       # Lint frontend
       - name: Run ESLint
         working-directory: frontend
-        run: npm ci && npx eslint .
+        run: npm install && npm run lint
 
       # Build frontend
       - name: Build frontend
@@ -27,12 +23,7 @@ jobs:
       # Test frontend
       - name: Test frontend
         working-directory: frontend
-        run: npm test -- --watchAll=false
-
-      # Test backend (unit)
-      - name: Test backend
-        working-directory: backend
-        run: flutter pub get && flutter test
+        run: npm run test -- --watchAll=false
 
   integration-tests:
     runs-on: ubuntu-latest

@@ -1,10 +1,13 @@
 # Stage 1: build
 FROM node:20-alpine AS builder
 WORKDIR /app
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
+
+ENV HUSKY=0
+
+COPY package.json package-lock.json ./
+RUN npm ci
 COPY . .
-RUN yarn build
+RUN npm run build:prod
 
 # Stage 2: nginx for static serving
 FROM nginx:alpine

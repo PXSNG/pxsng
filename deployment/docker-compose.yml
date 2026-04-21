@@ -3,23 +3,34 @@ services:
     build:
       context: ../frontend
     ports:
-      - "3000:3000"
+      - '80:80'
     depends_on:
       - backend
-    command: sh -c "npm install && npm test -- --watchAll=false"
-
+    restart: unless-stopped
+    hostname: frontend
+    healthcheck:
+      test:
+        [
+          'CMD-SHELL',
+          'wget -q -O /dev/null http://localhost:80/index.html || exit 1',
+        ]
+      interval: 20s
+      retries: 5
   backend:
     build:
       context: ../backend
-    ports:
-      - "8080:8080"
+    env_file:
+      - .env
+    expose:
+      - '8080'
+    restart: unless-stopped
+    hostname: backend
     depends_on:
       - oracle-db
-    command: sh -c "flutter pub get && flutter test"
-
   oracle-db:
     image: container-registry.oracle.com/database/free:latest
-    container_name: oracle-23ai-free
+    container_name: free-oracle-db
+    restart: unless-stopped
     hostname: database
     env_file:
       - .env
@@ -27,16 +38,16 @@ services:
       ORACLE_PWD: ${ORACLE_PWD}
       APP_USER: ${APP_USER}
       APP_USER_PASSWORD: ${APP_USER_PASSWORD}
-    ports:
-      - "1521:1521"
-      - "5500:5500"
+    expose:
+      - '1521'
+      - '5500'
     volumes:
       - ../model/oracle-data/data/:/opt/oracle/oradata
       - ../model/oracle-data/startup/:/opt/oracle/scripts/startup
       - ../model/oracle-data/setup/:/opt/oracle/scripts/setup
     healthcheck:
-      test: ["CMD-SHELL", "lsnrctl status | grep 'READY'"]
-      interval: 10s
+      test: ['CMD-SHELL', "lsnrctl status | grep 'READY'"]
+      interval: 20s
       retries: 10
 
 #   ords:
