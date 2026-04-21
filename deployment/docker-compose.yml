@@ -3,9 +3,11 @@ services:
     build:
       context: ../frontend
     ports:
-      - 80:80'
+      - '80:80'
     depends_on:
       - backend
+    restart: unless-stopped
+    hostname: frontend
     healthcheck:
       test:
         [
@@ -21,6 +23,8 @@ services:
       - .env
     expose:
       - '8080'
+    restart: unless-stopped
+    hostname: backend
     depends_on:
       - oracle-db
   oracle-db:
