@@ -1,5 +1,6 @@
 from Types.User import User
 
+
 class UsersCalls:
     def __init__(self):
         dummy_users = [
@@ -22,3 +23,4 @@ class UsersCalls:
 
     def GetAllUsers(self) -> list[User]:
         return self.Users
+
