@@ -1,4 +1,4 @@
-const BACKEND_URL = process.env?.BACKEND_URL ?? 'http://backend:8080';
+import { BACKEND_URL } from '@services';
 
 export const getCourses = async () => {
   try {

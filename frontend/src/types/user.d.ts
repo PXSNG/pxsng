@@ -1,8 +1,9 @@
 interface UserData {
   id: string;
-  name: string;
+  firstname: string;
+  lastname: string;
   email: string;
-  points: number;
+  coin_balance: number;
   avatarUrl?: string;
 }
 
