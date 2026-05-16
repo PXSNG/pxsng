@@ -14,7 +14,7 @@ import ErrorBoundary from '@components/common/ErrorBoundary/ErrorBoundary';
 import './index.css';
 import 'react-loading-skeleton/dist/skeleton.css';
 import SettingsProvider from '@providers/SettingsProvider';
-import UserProvider from '@providers/UserProvider';
+import UserProvider from '@providers/CurrentUserProvider';
 
 const root = document.getElementById('root') as HTMLElement;
 

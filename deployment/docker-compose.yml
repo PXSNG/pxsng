@@ -2,6 +2,10 @@ services:
   frontend:
     build:
       context: ../frontend
+    env_file:
+      - .env
+    environment:
+      - VITE_BACKEND_URL=${BACKEND_URL}
     ports:
       - '80:80'
     depends_on:
@@ -21,6 +25,10 @@ services:
       context: ../backend
     env_file:
       - .env
+    environment:
+      - CORS_ORIGIN=${CORS_ORIGIN}
+    ports:
+      - '8080:8080'
     expose:
       - '8080'
     restart: unless-stopped

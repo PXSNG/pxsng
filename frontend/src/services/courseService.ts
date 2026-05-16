@@ -1,4 +1,4 @@
-const BACKEND_URL = process.env?.BACKEND_URL ?? 'http://backend:8080';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL ?? 'http://backend:8080';
 
 export const getCourses = async () => {
   try {

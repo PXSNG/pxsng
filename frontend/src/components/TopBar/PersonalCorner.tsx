@@ -2,21 +2,21 @@ import { ModeNight, Sunny } from '@mui/icons-material';
 import { useContextMenu } from '@providers/ContextMenuProvider';
 import { usePlatform } from '@providers/PlatformProvider';
 import { useSettings } from '@providers/SettingsProvider';
-import { useUser } from '@providers/UserProvider';
+import { useCurrentUser } from '@providers/CurrentUserProvider';
 import { memo, useCallback, useMemo } from 'react';
 
 const PersonalCorner = () => {
   const { theme, toggleTheme: settingsToggleTheme } = useSettings();
   const { isMobile } = usePlatform();
-  const { user } = useUser();
+  const { currentUser } = useCurrentUser();
   const { showContextMenu } = useContextMenu();
 
   const toggleTheme = useCallback(() => {
     settingsToggleTheme();
   }, [theme, settingsToggleTheme]);
 
-  const userInitial = useMemo(() => user?.name?.charAt(0) ?? '?', [user]);
-  const userPoints = useMemo(() => user?.points ?? 0, [user]);
+  const userInitial = useMemo(() => currentUser?.firstname?.charAt(0) ?? '?', [currentUser]);
+  const userPoints = useMemo(() => currentUser?.coin_balance ?? 0, [currentUser]);
 
   const handleProfileClick = useCallback(
     (e) => {
@@ -53,7 +53,7 @@ const PersonalCorner = () => {
         },
       ]);
     },
-    [showContextMenu],
+    [showContextMenu, userPoints],
   );
 
   return (
