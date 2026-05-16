@@ -5,13 +5,12 @@ services:
     env_file:
       - .env
     environment:
-      - VITE_BACKEND_URL=${BACKEND_URL}
+      - VITE_BACKEND_URL=${BACKEND_URL:-http://localhost:8080}
     ports:
       - '80:80'
     depends_on:
       - backend
     restart: unless-stopped
-    hostname: frontend
     healthcheck:
       test:
         [
@@ -29,17 +28,13 @@ services:
       - CORS_ORIGIN=${CORS_ORIGIN}
     ports:
       - '8080:8080'
-    expose:
-      - '8080'
     restart: unless-stopped
-    hostname: backend
     depends_on:
       - oracle-db
   oracle-db:
     image: container-registry.oracle.com/database/free:latest
     container_name: free-oracle-db
     restart: unless-stopped
-    hostname: database
     env_file:
       - .env
     environment:

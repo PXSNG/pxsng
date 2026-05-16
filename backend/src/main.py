@@ -9,14 +9,20 @@ from Controllers.CurrentUser import api as current_user_ns
 
 app = Flask(__name__)
 
+cors_setting = {
+    "origins": os.getenv("CORS_ORIGIN", "*"),
+    "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    "allow_headers": ["Content-Type", "Authorization"],
+}
+
+CORS(app, resources={r"/*": cors_setting})
+
 
 api = Api(
     app,
     version="1.0",
     title="pxsng backend"
 )
-
-CORS(app, resources={r"/*": {"origins": os.getenv("CORS_ORIGIN", "*")}})
 
 api.add_namespace(courses_ns, path="/courses")
 api.add_namespace(users_ns, path="/users")

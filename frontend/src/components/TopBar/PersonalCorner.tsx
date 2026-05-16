@@ -15,7 +15,10 @@ const PersonalCorner = () => {
     settingsToggleTheme();
   }, [theme, settingsToggleTheme]);
 
-  const userInitial = useMemo(() => currentUser?.firstname?.charAt(0) ?? '?', [currentUser]);
+  const userInitial = useMemo(
+    () => currentUser?.firstname?.charAt(0)?.toUpperCase() ?? '?',
+    [currentUser],
+  );
   const userPoints = useMemo(() => currentUser?.coin_balance ?? 0, [currentUser]);
 
   const handleProfileClick = useCallback(
