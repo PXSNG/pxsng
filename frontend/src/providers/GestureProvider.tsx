@@ -217,3 +217,5 @@ export const useGestures = (ref: React.RefObject<HTMLElement | null>) => {
 
   return handlerApi;
 };
+
+export default GestureProvider;

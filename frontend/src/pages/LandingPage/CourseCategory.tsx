@@ -6,7 +6,7 @@ import Course, { CourseType } from '@components/Course/Course';
 interface CourseCategoryProps {
   title: string;
   icon?: React.ReactNode;
-  courses: CourseType[];
+  courses?: CourseType[] | null;
 }
 
 const CourseCategory = ({ title, icon, courses }: CourseCategoryProps) => {

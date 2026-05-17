@@ -13,8 +13,10 @@ course_model = api.model(
 )
 
 COURSES = [
-    {"id": 1, "name": "test1", "description": "testCourse", "price": 3.10},
-    {"id": 2, "name": "test2", "description": "testCourse2", "price": 2.90},
+    {"id": 1, "name": "Let Go", "description": "Learn how to properly let go", "price": 3.10},
+    {"id": 2, "name": "Markiplier & You", "description": "The Tricks to Writing amazing content", "price": 2.90},
+    {"id": 3, "name": "Handling sensitive data", "description": "Learn how to handle sensitive data securely. TODO: remove api key", "price": 4.00},
+    {"id": 4, "name": "How to be a good person", "description": "Learn how to be a good person in 10 easy steps", "price": 1.50},
 ]
 
 
@@ -23,6 +25,16 @@ class CoursesController(Resource):
     @api.marshal_list_with(course_model)
     def get(self):
         return COURSES
+    
+    def post(self, course_data):
+        new_course = {
+            "id": len(COURSES) + 1,
+            "name": course_data["name"],
+            "description": course_data["description"],
+            "price": course_data["price"],
+        }
+        COURSES.append(new_course)
+        return new_course, 201
 
 
 @api.route("/<int:id>")
