@@ -31,9 +31,8 @@ services:
       - "1521:1521"
       - "5500:5500"
     volumes:
-     # - ../model/oracle-data/data/:/opt/oracle/oradata
+      # - ../model/oracle-data/data/:/opt/oracle/oradata
       - ../model/oracle-data/startup/:/opt/oracle/scripts/startup
-      - ../model/oracle-data/setup/:/opt/oracle/scripts/setup
     healthcheck:
       test: ["CMD-SHELL", "lsnrctl status | grep 'READY'"]
       interval: 10s
