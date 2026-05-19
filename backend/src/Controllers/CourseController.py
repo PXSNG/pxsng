@@ -12,7 +12,7 @@ course_model = api.model(
         "price": fields.Float(),
         "duration_days": fields.Integer(),
         "max_participants": fields.Integer(),
-        "category_id": fields.Integer()
+        "category_id": fields.Integer(),
     },
 )
 
@@ -28,6 +28,7 @@ class CoursesController(Resource):
 
 @api.route("/<int:id>")
 class CourseController(Resource):
+    @api.marshal_with(course_model)
     def get(self, id):
         course = database_accessor.GetCourseById(id)
         if course:
