@@ -2,7 +2,7 @@ import { ModeNight, Sunny } from '@mui/icons-material';
 import { useContextMenu } from '@providers/ContextMenuProvider';
 import { usePlatform } from '@providers/PlatformProvider';
 import { useSettings } from '@providers/SettingsProvider';
-import { useCurrentUser } from '@providers/CurrentUserProvider';
+import { useCurrentUser } from '@providers/content/CurrentUserProvider';
 import { memo, useCallback, useMemo } from 'react';
 
 const PersonalCorner = () => {

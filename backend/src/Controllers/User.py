@@ -19,8 +19,15 @@ class UsersController(Resource):
     def get(self):
         return USERS
 
-    def put(self):
-        USERS.append({"id": 3, "name": "Bob", "lastname": "Shakespeare"})
+    def put(self, user_data):
+        if user_data is None:
+            api.abort(400, "No user data provided")
+        new_user = {
+            "id": len(USERS) + 1,
+            "name": user_data["name"],
+            "lastname": user_data["lastname"],
+        }   
+        USERS.append(new_user)
 
 
 @api.route("/<int:id>")
