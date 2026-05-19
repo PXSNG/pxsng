@@ -697,5 +697,23 @@ begin
    :new.updated_at := current_timestamp;
 end;
 /
+-- #############################################
+-- 6. DUMMY DATA INSERTION
+-- #############################################
 
+pro    6.1 Inserting dummy courses...
+
+INSERT INTO "COURSE" ("TITLE", "DESCRIPTION", "PRICE", "CREATED_AT") 
+VALUES ('Let Go', 'Learn how to properly let go', 3.10, CURRENT_TIMESTAMP);
+
+INSERT INTO "COURSE" ("TITLE", "DESCRIPTION", "PRICE", "CREATED_AT") 
+VALUES ('Markiplier and You', 'The Tricks to Writing amazing content', 2.90, CURRENT_TIMESTAMP);
+
+INSERT INTO "COURSE" ("TITLE", "DESCRIPTION", "PRICE", "CREATED_AT") 
+VALUES ('Handling sensitive data', 'Learn how to handle sensitive data securely. TODO: remove api key', 4.00, CURRENT_TIMESTAMP);
+
+INSERT INTO "COURSE" ("TITLE", "DESCRIPTION", "PRICE", "CREATED_AT") 
+VALUES ('How to be a good person', 'Learn how to be a good person in 10 easy steps', 1.50, CURRENT_TIMESTAMP);
+
+COMMIT;
 SHOW ERRORS
