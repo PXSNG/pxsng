@@ -9,13 +9,20 @@ services:
     command: sh -c "npm install && npm test -- --watchAll=false"
 
   backend:
+    container_name: flask_backend
     build:
       context: ../backend
+      dockerfile: "../backend/Dockerfile"
+    env_file:
+      - .env
+    environment:
+      DATABASE_USER: ${APP_USER}
+      DATABASE_PASSWORD: ${APP_USER_PASSWORD}
+      DATABASE_DSN: ${DATABASE_DSN}
     ports:
       - "8080:8080"
     depends_on:
       - oracle-db
-    command: sh -c "flutter pub get && flutter test"
 
   oracle-db:
     image: container-registry.oracle.com/database/free:latest
