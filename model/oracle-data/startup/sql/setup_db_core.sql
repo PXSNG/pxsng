@@ -622,14 +622,22 @@ create or replace package body course_api_pkg as
                                  order by created_at desc;
    end get_all_courses;
 
-   procedure get_course_by_id (
-      p_course_id     in number,
+    procedure get_course_by_id (
+      p_course_id      in number,
       p_course_cursor out sys_refcursor
-   ) is
-   begin
-      open p_course_cursor for select *
-                                                          from "COURSE"
-                                where id = p_course_id;
+    ) is
+    begin
+      open p_course_cursor for select id, 
+                                      title, 
+                                      description, 
+                                      price, 
+                                      duration_days, 
+                                      max_participants, 
+                                      category_id, 
+                                      created_at, 
+                                      updated_at
+                                                        from "COURSE"
+                                 where id = p_course_id;
    end get_course_by_id;
 
 end course_api_pkg;
