@@ -20,12 +20,20 @@ services:
       interval: 20s
       retries: 5
   backend:
+    container_name: flask_backend
     build:
       context: ../backend
+      dockerfile: "../backend/Dockerfile"
     env_file:
       - .env
     environment:
       - CORS_ORIGIN=${CORS_ORIGIN}
+    env_file:
+      - .env
+    environment:
+      DATABASE_USER: ${APP_USER}
+      DATABASE_PASSWORD: ${APP_USER_PASSWORD}
+      DATABASE_DSN: ${DATABASE_DSN}
     ports:
       - '8080:8080'
     restart: unless-stopped
@@ -45,9 +53,8 @@ services:
       - '1521'
       - '5500'
     volumes:
-      - ../model/oracle-data/data/:/opt/oracle/oradata
+      # - ../model/oracle-data/data/:/opt/oracle/oradata
       - ../model/oracle-data/startup/:/opt/oracle/scripts/startup
-      - ../model/oracle-data/setup/:/opt/oracle/scripts/setup
     healthcheck:
       test: ['CMD-SHELL', "lsnrctl status | grep 'READY'"]
       interval: 20s

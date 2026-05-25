@@ -622,14 +622,22 @@ create or replace package body course_api_pkg as
                                  order by created_at desc;
    end get_all_courses;
 
-   procedure get_course_by_id (
-      p_course_id     in number,
+    procedure get_course_by_id (
+      p_course_id      in number,
       p_course_cursor out sys_refcursor
-   ) is
-   begin
-      open p_course_cursor for select *
-                                                          from "COURSE"
-                                where id = p_course_id;
+    ) is
+    begin
+      open p_course_cursor for select id, 
+                                      title, 
+                                      description, 
+                                      price, 
+                                      duration_days, 
+                                      max_participants, 
+                                      category_id, 
+                                      created_at, 
+                                      updated_at
+                                                        from "COURSE"
+                                 where id = p_course_id;
    end get_course_by_id;
 
 end course_api_pkg;
@@ -697,5 +705,91 @@ begin
    :new.updated_at := current_timestamp;
 end;
 /
+-- #############################################
+-- 6. DUMMY DATA INSERTION
+-- #############################################
 
+pro    6.1 Inserting dummy courses...
+
+INSERT INTO "COURSE" ("TITLE", "DESCRIPTION", "PRICE", "CREATED_AT") 
+VALUES ('Let Go', 'Learn how to properly let go', 3.10, CURRENT_TIMESTAMP);
+
+INSERT INTO "COURSE" ("TITLE", "DESCRIPTION", "PRICE", "CREATED_AT") 
+VALUES ('Markiplier and You', 'The Tricks to Writing amazing content', 2.90, CURRENT_TIMESTAMP);
+
+INSERT INTO "COURSE" ("TITLE", "DESCRIPTION", "PRICE", "CREATED_AT") 
+VALUES ('Handling sensitive data', 'Learn how to handle sensitive data securely. TODO: remove api key', 4.00, CURRENT_TIMESTAMP);
+
+INSERT INTO "COURSE" ("TITLE", "DESCRIPTION", "PRICE", "CREATED_AT") 
+VALUES ('How to be a good person', 'Learn how to be a good person in 10 easy steps', 1.50, CURRENT_TIMESTAMP);
+
+COMMIT;
+-- #############################################
+-- 7. DUMMY DATA FOR USERS & DEPENDENCIES
+-- #############################################
+
+PROMPT 7.1 Creating dummy shopping carts for users...
+
+-- We generate explicit Hex IDs for the carts so we can map them directly to the users below
+INSERT INTO "SHOPPINGCART" ("ID", "CREATED_AT", "UPDATED_AT") 
+VALUES ('CART0000000000000000000000000001', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO "SHOPPINGCART" ("ID", "CREATED_AT", "UPDATED_AT") 
+VALUES ('CART0000000000000000000000000002', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO "SHOPPINGCART" ("ID", "CREATED_AT", "UPDATED_AT") 
+VALUES ('CART0000000000000000000000000003', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO "SHOPPINGCART" ("ID", "CREATED_AT", "UPDATED_AT") 
+VALUES ('CART0000000000000000000000000004', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+
+PROMPT 7.2 Inserting dummy users...
+
+-- User 1: Standard Premium User
+INSERT INTO "APP_USER" (
+    "ID", "FIRSTNAME", "LASTNAME", "EMAIL", "TELEPHONE", 
+    "PASSWORD_HASH", "ADDRESS_ID", "IS_PREMIUM", "IS_COMPANY_MANAGER", 
+    "COIN_BALANCE", "SHOPPING_CART", "CREATED_AT", "UPDATED_AT"
+) VALUES (
+    'USER0000000000000000000000000001', 'Linus', 'Torvalds', 'linus@linuxfoundation.org', '+1-555-0199',
+    '$2b$12$K8stKjW4R26mD8K9O2L1u.examplehash1234567890', NULL, 'Y', 'N',
+    500, 'CART0000000000000000000000000001', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+);
+
+-- User 2: Company Manager
+INSERT INTO "APP_USER" (
+    "ID", "FIRSTNAME", "LASTNAME", "EMAIL", "TELEPHONE", 
+    "PASSWORD_HASH", "ADDRESS_ID", "IS_PREMIUM", "IS_COMPANY_MANAGER", 
+    "COIN_BALANCE", "SHOPPING_CART", "CREATED_AT", "UPDATED_AT"
+) VALUES (
+    'USER0000000000000000000000000002', 'Ada', 'Lovelace', 'ada@analyticalengine.io', '+44-20-7946-0192',
+    '$2b$12$V9ndPjX5R27mE9K0P3M2v.examplehash0987654321', NULL, 'N', 'Y',
+    0, 'CART0000000000000000000000000002', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+);
+
+-- User 3: Regular User with some coins
+INSERT INTO "APP_USER" (
+    "ID", "FIRSTNAME", "LASTNAME", "EMAIL", "TELEPHONE", 
+    "PASSWORD_HASH", "ADDRESS_ID", "IS_PREMIUM", "IS_COMPANY_MANAGER", 
+    "COIN_BALANCE", "SHOPPING_CART", "CREATED_AT", "UPDATED_AT"
+) VALUES (
+    'USER0000000000000000000000000003', 'Alan', 'Turing', 'alan@bletchleypark.org', NULL,
+    '$2b$12$X7mdQjW9R15mF8J1Q4N3w.examplehash1122334455', NULL, 'N', 'N',
+    75, 'CART0000000000000000000000000003', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+);
+
+-- User 4: Premium & Company Manager
+INSERT INTO "APP_USER" (
+    "ID", "FIRSTNAME", "LASTNAME", "EMAIL", "TELEPHONE", 
+    "PASSWORD_HASH", "ADDRESS_ID", "IS_PREMIUM", "IS_COMPANY_MANAGER", 
+    "COIN_BALANCE", "SHOPPING_CART", "CREATED_AT", "UPDATED_AT"
+) VALUES (
+    'USER0000000000000000000000000004', 'Grace', 'Hopper', 'grace@nanoseconds.navy', '+1-703-555-0144',
+    '$2b$12$Z3lkRjW2R16mG9K2R5O4x.examplehash6677889900', NULL, 'Y', 'Y',
+    1250, 'CART0000000000000000000000000004', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+);
+
+COMMIT;
+PROMPT ✅ Dummy users data sync completed!
 SHOW ERRORS
