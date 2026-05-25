@@ -3,17 +3,23 @@
     "target": "ES2020",
     "module": "ESNext",
     "jsx": "react-jsx",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "allowJs": false,
+    "checkJs": false,
+    "noEmit": true,
+    "isolatedModules": true,
     "strict": true,
-    "moduleResolution": "Node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": "src",
+    "noUncheckedSideEffectImports": false,
+    "noImplicitAny": false,
     "paths": {
-      "@/*": ["./*"]
+      "@*": ["./src/*"]
     }
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["src", "vite.config.ts"],
+  "exclude": ["node_modules", "dist", "*.config.{ts,js}"]
 }
