@@ -39,9 +39,9 @@ class CoursesCalls:
 
                 cursor.execute(
                     """
-                    SELECT id, title, description, price, duration_days, 
-                           max_participants, category_id, created_at, updated_at 
-                    FROM "COURSE" 
+                    SELECT id, title, description, price, duration_days,
+                           max_participants, category_id, created_at, updated_at
+                    FROM "COURSE"
                     WHERE id = :1
                     """,
                     [id],
