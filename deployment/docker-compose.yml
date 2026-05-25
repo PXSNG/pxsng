@@ -7,18 +7,19 @@ services:
     environment:
       - VITE_BACKEND_URL=${BACKEND_URL:-http://localhost:8080}
     ports:
-      - '80:80'
+      - "80:80"
     depends_on:
       - backend
     restart: unless-stopped
     healthcheck:
       test:
         [
-          'CMD-SHELL',
-          'wget -q -O /dev/null http://localhost:80/index.html || exit 1',
+          "CMD-SHELL",
+          "wget -q -O /dev/null http://localhost:80/index.html || exit 1",
         ]
       interval: 20s
       retries: 5
+
   backend:
     container_name: flask_backend
     build:
@@ -27,18 +28,16 @@ services:
     env_file:
       - .env
     environment:
-      - CORS_ORIGIN=${CORS_ORIGIN}
-    env_file:
-      - .env
-    environment:
+      CORS_ORIGIN: ${CORS_ORIGIN}
       DATABASE_USER: ${APP_USER}
       DATABASE_PASSWORD: ${APP_USER_PASSWORD}
       DATABASE_DSN: ${DATABASE_DSN}
     ports:
-      - '8080:8080'
+      - "8080:8080"
     restart: unless-stopped
     depends_on:
       - oracle-db
+
   oracle-db:
     image: container-registry.oracle.com/database/free:latest
     container_name: free-oracle-db
@@ -50,13 +49,13 @@ services:
       APP_USER: ${APP_USER}
       APP_USER_PASSWORD: ${APP_USER_PASSWORD}
     expose:
-      - '1521'
-      - '5500'
+      - "1521"
+      - "5500"
     volumes:
       # - ../model/oracle-data/data/:/opt/oracle/oradata
       - ../model/oracle-data/startup/:/opt/oracle/scripts/startup
     healthcheck:
-      test: ['CMD-SHELL', "lsnrctl status | grep 'READY'"]
+      test: ["CMD-SHELL", "lsnrctl status | grep 'READY'"]
       interval: 20s
       retries: 10
 
