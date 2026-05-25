@@ -37,7 +37,6 @@ services:
     restart: unless-stopped
     depends_on:
       - oracle-db
-
   oracle-db:
     image: container-registry.oracle.com/database/free:latest
     container_name: free-oracle-db
