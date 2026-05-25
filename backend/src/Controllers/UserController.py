@@ -15,28 +15,41 @@ user_model = api.model(
         "email": fields.String(),
         "telephone": fields.String(),
         "password_hash": fields.String(),
-        "address_id": fields.Integer()
+        "address_id": fields.String(),
     },
 )
 
 database_accessor = UsersCalls()
-USERS: list[User] = database_accessor.GetAllUsers()
 
 
 @api.route("/")
 class UsersController(Resource):
-    @api.marshal_list_with(user_model)
-    def get(self):
-        return USERS
+    def post(self):
+        # 1. Grab the raw JSON body sent by the client
+        user_payload = api.payload
 
-    def put(self):
-        USERS.append({"id": 3, "name": "Bob", "lastname": "Shakespeare"})
+        # 2. Forward payload to the persistence layer
+        status_code, response_data = database_accessor.CreateUserRecord(user_payload)
+
+        # 3. If database failed, use RESTX abort to return the clean error message
+        if status_code != 201:
+            api.abort(status_code, response_data.get("message", "Operation failed"))
+
+        # 4. Success path (Returns 201 Created along with the generated User ID)
+        return response_data, 201
 
 
 @api.route("/<string:id>")
 class UserController(Resource):
+    @api.marshal_with(user_model)
     def get(self, id):
-        user = next((asdict(user) for user in USERS if user.id == id), None)
+        user = database_accessor.GetUserById(id)
         if user:
             return user
         api.abort(404, f"User {id} not found")
+
+    def delete(self, id):
+        result = database_accessor.DeleteUserRecord(id)
+        if result[0] != 500:
+            return
+        api.abort(500, f"{result[1]}")
