@@ -1,5 +1,7 @@
 cd frontend
 
-pnpm run lint:fix
+CI=true pnpm i --no-frozen-lockfile
+
+CI=true pnpm run lint:fix
 
 git update-index --again

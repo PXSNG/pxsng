@@ -82,7 +82,7 @@ importers:
         specifier: ^3.8.2
         version: 3.8.2
       prettier-eslint:
-        specifier: ^16.4.2
+        specifier: ^16.3.0
         version: 16.4.2(typescript@5.9.3)
       typescript:
         specifier: ~5.9.3
@@ -1016,6 +1016,7 @@ packages:
 
   '@ungap/structured-clone@1.3.0':
     resolution: {integrity: sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==}
+    deprecated: Potential CWE-502 - Update to 1.3.1 or higher
 
   '@vitejs/plugin-react@5.2.0':
     resolution: {integrity: sha512-YmKkfhOAi3wsB1PhJq5Scj3GXMn3WvtQ/JC0xoopuHoXSdmtdStOpFrYaT1kie2YgFBcIe64ROzMYRjCrYOdYw==}

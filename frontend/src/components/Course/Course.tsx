@@ -2,7 +2,7 @@ import { useSettings } from '@providers/SettingsProvider';
 import { memo, useCallback } from 'react';
 
 export interface CourseType {
-  name: string;
+  title: string;
   description: string;
   image?: string;
   price: number;
@@ -34,7 +34,7 @@ const Course = ({ course, width, height, onClick }: CourseProps) => {
             className="rounded-md object-cover w-full h-full z-10 group-hover:scale-105 transition-transform duration-300"
             draggable={false}
             src={'/pxsng.svg'}
-            alt={course.name}
+            alt={course.title}
             width={width || 200}
             height={height || 200}
           />
@@ -44,7 +44,7 @@ const Course = ({ course, width, height, onClick }: CourseProps) => {
             className="text-xl font-bold text-font-light truncate transition-colors duration-300"
             data-theme={theme}
           >
-            {course.name}
+            {course.title}
           </div>
           <div
             className="group-hover:block hidden truncate text-sm mt-1 text-font-light"
